@@ -32,7 +32,7 @@ This project automates the process of booking General/Tatkal tickets on the IRCT
 1. **Clone the Repository**  
 ```bash
 git clone https://github.com/your-username/irctc-tatkal-automation.git
-cd irctc-tatkal-automation
+cd irctc-automation
 ```
 
 2. **Install Dependencies**  
