@@ -47,6 +47,11 @@ export class BotBooking {
         this.savePassengerButton = this.dishaBotFrame.getByRole('button', { name: 'Save Passenger' });
         this.continueButton = this.dishaBotFrame.getByRole('button', { name: 'Continue' });
 
+        // Dynamic pricing window
+        this.dynamicPricingLocator = this.dishaBotFrame.getByText('Dynamic Pricing is applicable');
+        this.confirmButtonLocator = this.dishaBotFrame.getByRole('button', { name: 'Confirm' });
+
+
         // Final confirmation
         this.autoUpgradationCheckbox = this.dishaBotFrame.locator('div:nth-child(4) > div');
         this.fillEmailID = (emailID) => this.dishaBotFrame.getByRole('textbox', { name: 'Enter your Email ID' }).fill(emailID);
@@ -79,6 +84,9 @@ export class BotBooking {
 
     async loginViaOTP(data) {
         await this.bookTicketButtonOnBot.click();
+        if (this.dynamicPricingLocator.isVisible()) {
+            await this.confirmButtonLocator.click();
+        }
         await this.mobileNumberInput.fill(data.mobileNumber);
         await this.getOtpButton.click();
         await this.irctcUserIdInput.fill(data.irctcUserId);
