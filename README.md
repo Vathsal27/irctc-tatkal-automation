@@ -45,6 +45,13 @@ npm install
 npx playwright install
 ```
 
+## Supported Inputs
+| Input        | Accepted Values                      |
+|-------------|---------------------------------------|
+| **Quota**     | `general`, `tatkal`                   |
+| **Gender**    | `Male`, `Female`, `Transgender`        |
+| **Coach Type**| `SL`, `3A`, `2A`, `1A`                |
+
 ---
 
 ## 🚦 **Usage**
