@@ -1,0 +1,21 @@
+{
+    "url": "https://www.irctc.co.in/",
+    "irctcUserId": "irctc-id",
+    "emailID": "email-id",
+    "srcStationCode": "in-uppercase-example-PUNE",
+    "destStationCode": "in-uppercase-example-PUNE",
+    "quota": "tatkal", 
+    "date": "enter-date",
+    "month": "enter-month",
+    "year": "enter-year",
+    "trainNum": "train-number",
+    "coachType": "coach-type",
+    "mobileNumber": "mobile-num",
+    "passengerDetails": [
+        {
+            "name": "John Wick",
+            "age": "69",
+            "gender": "Male"
+        }
+    ]
+}
