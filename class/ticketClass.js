@@ -94,8 +94,6 @@ export class BotBooking {
     }
 
     async selectTrainAndCoach(trainNum, coachType) {
-        console.log(`Selecting coach type "${coachType}" for train number "${trainNum}"`);
-
         const trainContainer = this.trainSelector(trainNum);
         const trainCount = await trainContainer.count();
 
@@ -115,8 +113,6 @@ export class BotBooking {
         }
 
         await coachContainer.click();
-
-        console.log(`✅ Clicked on coach "${coachType}" for train "${trainNum}"`);
     }
 
     async addPassengerDetails(data) {

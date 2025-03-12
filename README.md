@@ -92,7 +92,7 @@ const passengerDetails = [
 
 ### 2. **Run the Automation**
 ```bash
-npm run test
+npm run script
 ```
 
 ---
