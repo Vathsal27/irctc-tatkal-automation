@@ -48,7 +48,7 @@ npx playwright install
 ---
 
 ## 🧑‍💼 **Passenger Details Configuration**
-You can add passenger details by modifying the `data.js` file.  
+You can add passenger details by modifying the `data.json` file.  
 - `passengerDetails` is an array where you can add up to **4 passengers** at once.  
 - Just **duplicate the object structure** and update the user details accordingly.  
 
