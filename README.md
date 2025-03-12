@@ -45,12 +45,40 @@ npm install
 npx playwright install
 ```
 
-## Supported Inputs
+---
+
+## 🧑‍💼 **Passenger Details Configuration**
+You can add passenger details by modifying the `data.js` file.  
+- `passengerDetails` is an array where you can add up to **4 passengers** at once.  
+- Just **duplicate the object structure** and update the user details accordingly.  
+
+### Example:
+```javascript
+const passengerDetails = [
+    {
+        name: 'John Doe',
+        age: 30,
+        gender: 'Male',
+        seatPreference: 'Lower'
+    },
+    {
+        name: 'Jane Doe',
+        age: 28,
+        gender: 'Female',
+        seatPreference: 'Upper'
+    }
+];
+```
+> You can add up to **4 passenger objects** in the array.
+
+---
+
+## 📥 **Supported Inputs**
 | Input        | Accepted Values                      |
 |-------------|---------------------------------------|
 | **Quota**     | `general`, `tatkal`                   |
 | **Gender**    | `Male`, `Female`, `Transgender`        |
-| **Coach Type**| `2S`, `SL`, `3A`, `2A`, `1A`                |
+| **Coach Type**| `2S`, `SL`, `3A`, `2A`, `1A`           |
 
 ---
 
@@ -65,7 +93,6 @@ npm run test
 ```
 
 ---
-
 
 ## 📜 **License**
 This project is licensed under the **MIT License**.
