@@ -84,7 +84,7 @@ export class BotBooking {
 
     async loginViaOTP(data) {
         await this.bookTicketButtonOnBot.click();
-        if (this.dynamicPricingLocator.isVisible()) {
+        if (await this.dynamicPricingLocator.isVisible()) {
             await this.confirmButtonLocator.click();
         }
         await this.mobileNumberInput.fill(data.mobileNumber);
