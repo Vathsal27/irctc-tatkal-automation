@@ -50,7 +50,7 @@ npx playwright install
 |-------------|---------------------------------------|
 | **Quota**     | `general`, `tatkal`                   |
 | **Gender**    | `Male`, `Female`, `Transgender`        |
-| **Coach Type**| `SL`, `3A`, `2A`, `1A`                |
+| **Coach Type**| `2S`, `SL`, `3A`, `2A`, `1A`                |
 
 ---
 
