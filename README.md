@@ -83,9 +83,12 @@ const passengerDetails = [
 ---
 
 ## 🚦 **Usage**
-### 1. **Set Up Environment**
-- Add your IRCTC login details in the config file.
-- Configure the train number and coach type in `tatkalTicket.js`.
+### 1. **Set Up Data**
+- Add your IRCTC login details in the `data.json` file.
+- Enter the correct **source** and **destination station codes** carefully to avoid typos.  
+- Specify the correct **quota** (`general` or `tatkal`).  
+- Provide the **date, month, and year** of the journey accurately.  
+- Enter the desired **train number** and **coach type** correctly.
 
 ### 2. **Run the Automation**
 ```bash
