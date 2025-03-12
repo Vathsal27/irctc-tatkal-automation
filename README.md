@@ -31,7 +31,7 @@ This project automates the process of booking General/Tatkal tickets on the IRCT
 ## 📚 **Setup Instructions**
 1. **Clone the Repository**  
 ```bash
-git clone https://github.com/your-username/irctc-automation.git
+git clone https://github.com/Vathsal27/irctc-automation.git
 cd irctc-automation
 ```
 
