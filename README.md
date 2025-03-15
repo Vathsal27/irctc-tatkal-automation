@@ -58,14 +58,12 @@ const passengerDetails = [
     {
         name: 'John Doe',
         age: 30,
-        gender: 'Male',
-        seatPreference: 'Lower'
+        gender: 'Male'
     },
     {
         name: 'Jane Doe',
         age: 28,
-        gender: 'Female',
-        seatPreference: 'Upper'
+        gender: 'Female'
     }
 ];
 ```
