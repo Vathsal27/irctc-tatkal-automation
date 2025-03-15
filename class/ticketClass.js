@@ -2,30 +2,26 @@ export class BotBooking {
     constructor(page) {
         this.page = page;
 
-        this.askDishaLauncher = this.page.locator('#askDishaLuncher').getByRole('img').first();
-        this.bookTrainTicket = this.page.getByText('Book Train Ticket');
-        this.dishaBotFrame = this.page.locator('#Disha-Bot').contentFrame();
+        this.sourceStation = this.page.getByText('Select Your Source Station');
+        this.sourceSearchBox = this.page.getByRole('textbox', { name: 'Search your Station or City' });
 
-        this.sourceStation = this.dishaBotFrame.getByText('Select Your Source Station');
-        this.sourceSearchBox = this.dishaBotFrame.getByRole('textbox', { name: 'Search your Station or City' });
+        this.destinationStation = this.page.getByText('ToSelect Your Destination');
+        this.destinationSearchBox = this.page.getByRole('textbox', { name: 'Search your Station or City' });
 
-        this.destinationStation = this.dishaBotFrame.getByText('ToSelect Your Destination');
-        this.destinationSearchBox = this.dishaBotFrame.getByRole('textbox', { name: 'Search your Station or City' });
+        this.selectStation = this.page.locator('//div[@class="stations"]/div[1]');
 
-        this.selectStation = this.dishaBotFrame.locator('//div[@class="stations"]/div[1]');
+        this.journeyDate = this.page.getByLabel('Select Your Journey Date');
+        this.selectDate = (date, month, year) => this.page.locator(`#${month}-${year}`).getByText(`${date}`);  // Update dynamically if needed
 
-        this.journeyDate = this.dishaBotFrame.getByLabel('Select Your Journey Date');
-        this.selectDate = (date, month, year) => this.dishaBotFrame.locator(`#${month}-${year}`).getByText(`${date}`);  // Update dynamically if needed
+        this.quota = this.page.getByLabel('Select Your Quota');
+        this.selectQuota = (quota) => this.page.locator(`#${quota}`);
 
-        this.quota = this.dishaBotFrame.getByLabel('Select Your Quota');
-        this.selectQuota = (quota) => this.dishaBotFrame.locator(`#${quota}`);
-
-        this.bookTicketButton = this.dishaBotFrame.getByRole('button', { name: 'Book Ticket' });
+        this.bookTicketButton = this.page.getByRole('button', { name: 'Book Ticket' });
 
         // Select coach for the required train
         this.trainSelector = (trainNum) => {
             const trainRegex = new RegExp(`\\b${trainNum}\\b`);
-            return this.dishaBotFrame.getByText(trainRegex).locator('..').locator('..');
+            return this.page.getByText(trainRegex).locator('..').locator('..');
         };
 
         this.coachSelector = (trainNum, coachType) => {
@@ -34,36 +30,33 @@ export class BotBooking {
         };
 
         // Login and Passenger details locators
-        this.bookTicketButtonOnBot = this.dishaBotFrame.getByRole('button', { name: 'BOOK TICKET' });
-        this.mobileNumberInput = this.dishaBotFrame.getByPlaceholder('Enter mobile number');
-        this.getOtpButton = this.dishaBotFrame.getByRole('button', { name: 'Get OTP' });
-        this.irctcUserIdInput = this.dishaBotFrame.getByRole('textbox', { name: 'Enter IRCTC User ID Here...' });
-        this.verifyAndProceedButton = this.dishaBotFrame.getByRole('button', { name: 'Verify and Proceed' });
-        this.addNewPassengerButton = this.dishaBotFrame.getByRole('button', { name: 'Add New Passenger' });
+        this.bookTicketButtonOnBot = this.page.getByRole('button', { name: 'BOOK TICKET' });
+        this.mobileNumberInput = this.page.getByPlaceholder('Enter mobile number');
+        this.getOtpButton = this.page.getByRole('button', { name: 'Get OTP' });
+        this.irctcUserIdInput = this.page.getByRole('textbox', { name: 'Enter IRCTC User ID Here...' });
+        this.verifyAndProceedButton = this.page.getByRole('button', { name: 'Verify and Proceed' });
+        this.addNewPassengerButton = this.page.getByRole('button', { name: 'Add New Passenger' });
 
-        this.passengerNameInput = this.dishaBotFrame.getByRole('textbox', { name: 'Enter Full Name' });
-        this.passengerAgeInput = this.dishaBotFrame.getByPlaceholder('Enter Age');
-        this.passengerGenderOption = (gender) => this.dishaBotFrame.locator('#disha-drawer-1').getByText(gender, { exact: true });
-        this.savePassengerButton = this.dishaBotFrame.getByRole('button', { name: 'Save Passenger' });
-        this.continueButton = this.dishaBotFrame.getByRole('button', { name: 'Continue' });
+        this.passengerNameInput = this.page.getByRole('textbox', { name: 'Enter Full Name' });
+        this.passengerAgeInput = this.page.getByPlaceholder('Enter Age');
+        this.passengerGenderOption = (gender) => this.page.locator('#disha-drawer-1').getByText(gender, { exact: true });
+        this.savePassengerButton = this.page.getByRole('button', { name: 'Save Passenger' });
+        this.continueButton = this.page.getByRole('button', { name: 'Continue' });
 
         // Dynamic pricing window
-        this.dynamicPricingLocator = this.dishaBotFrame.getByText('Dynamic Pricing is applicable');
-        this.confirmButtonLocator = this.dishaBotFrame.getByRole('button', { name: 'Confirm' });
+        this.dynamicPricingLocator = this.page.getByText('Dynamic Pricing is applicable');
+        this.confirmButtonLocator = this.page.getByRole('button', { name: 'Confirm' });
 
 
         // Final confirmation
-        this.autoUpgradationCheckbox = this.dishaBotFrame.locator('div:nth-child(4) > div');
-        this.fillEmailID = (emailID) => this.dishaBotFrame.getByRole('textbox', { name: 'Enter your Email ID' }).fill(emailID);
-        this.continueButtonV2 = this.dishaBotFrame.locator('#drawer-footer').getByRole('button', { name: 'Continue' });
-        this.agreeToPolicy = this.dishaBotFrame.getByRole('button', { name: 'Yes, I understand' });
+        this.autoUpgradationCheckbox = this.page.locator('div:nth-child(4) > div');
+        this.fillEmailID = (emailID) => this.page.getByRole('textbox', { name: 'Enter your Email ID' }).fill(emailID);
+        this.continueButtonV2 = this.page.locator('#drawer-footer').getByRole('button', { name: 'Continue' });
+        this.agreeToPolicy = this.page.getByRole('button', { name: 'Yes, I understand' });
     }
 
     async fillStationDetails(data) {
         await this.page.goto(data.url);
-
-        await this.askDishaLauncher.click();
-        await this.bookTrainTicket.click();
 
         await this.sourceStation.click();
         await this.sourceSearchBox.fill(data.srcStationCode);
