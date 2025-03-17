@@ -4,5 +4,5 @@ import { bookTatkalTicket } from "../utils/bookTicket.js";
 test("Booking Train Ticket...", async ({ page }) => {
     test.setTimeout(300000);
     await bookTatkalTicket(page);
-    await page.waitForTimeout(120000);
+    await page.waitForTimeout(240000);
 });
