@@ -49,7 +49,7 @@ export class BotBooking {
 
 
         // Final confirmation
-        this.autoUpgradationCheckbox = this.page.locator('div:nth-child(5) > div');
+        this.autoUpgradationCheckbox = this.page.getByText('Consider for Auto Upgrade');
         this.fillEmailID = (emailID) => this.page.getByRole('textbox', { name: 'Enter your Email ID' }).fill(emailID);
         this.continueButtonV2 = this.page.locator('#drawer-footer').getByRole('button', { name: 'Continue' });
         this.agreeToPolicy = this.page.getByRole('button', { name: 'Yes, I understand' });
