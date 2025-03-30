@@ -11,7 +11,7 @@ export class BotBooking {
         this.selectStation = this.page.locator('//div[@class="stations"]/div[1]');
 
         this.journeyDate = this.page.getByLabel('Select Your Journey Date');
-        this.selectDate = (date, month, year) => this.page.locator(`#${month}-${year}`).getByText(`${date}`);  // Update dynamically if needed
+        this.selectDate = (date, month, year) => this.page.locator(`#${month}-${year}`).getByText(`${date}`, { exact: true });  // Update dynamically if needed
 
         this.quota = this.page.getByLabel('Select Your Quota');
         this.selectQuota = (quota) => this.page.locator(`#${quota}`);
@@ -46,7 +46,6 @@ export class BotBooking {
         // Dynamic pricing window
         this.dynamicPricingLocator = this.page.getByText('Dynamic Pricing is applicable');
         this.confirmButtonLocator = this.page.getByRole('button', { name: 'Confirm' });
-
 
         // Final confirmation
         this.autoUpgradationCheckbox = this.page.getByText('Consider for Auto Upgrade');

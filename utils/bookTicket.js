@@ -1,5 +1,6 @@
 import { BotBooking } from "../class/ticketClass.js";
 import { readFile } from "fs/promises";
+import { waitForExpectedResponse } from "../helpers.js";
 const data = JSON.parse(await readFile(new URL("../data.json", import.meta.url)));
 
 export async function bookTatkalTicket(page) {
@@ -7,7 +8,7 @@ export async function bookTatkalTicket(page) {
 
     await bot.fillStationDetails(data);
 
-    await page.waitForTimeout(3000);
+    await waitForExpectedResponse(page, 'bot/editTrains', 200);
 
     await bot.selectTrainAndCoach(data.trainNum, data.coachType);
 
