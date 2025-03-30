@@ -47,7 +47,6 @@ export class BotBooking {
         this.dynamicPricingLocator = this.page.getByText('Dynamic Pricing is applicable');
         this.confirmButtonLocator = this.page.getByRole('button', { name: 'Confirm' });
 
-
         // Final confirmation
         this.autoUpgradationCheckbox = this.page.getByText('Consider for Auto Upgrade');
         this.fillEmailID = (emailID) => this.page.getByRole('textbox', { name: 'Enter your Email ID' }).fill(emailID);
