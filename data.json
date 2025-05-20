@@ -13,9 +13,16 @@
     "mobileNumber": "mobile-num",
     "passengerDetails": [
         {
-            "name": "John Wick",
-            "age": "69",
-            "gender": "Male"
+            "name": "Rorona Zoro",
+            "age": "22",
+            "gender": "Male",
+            "berthPreference": "NA"
+        },
+        {
+            "name": "Nico Robin",
+            "age": "25",
+            "gender": "Female",
+            "berthPreference": "SUB"
         }
     ]
 }

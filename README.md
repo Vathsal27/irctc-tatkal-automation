@@ -1,4 +1,3 @@
-
 # IRCTC Tatkal Ticket Booking Automation using Playwright
 
 This project automates the process of booking General/Tatkal tickets on the IRCTC website using **Playwright** in **JavaScript**. It includes the capability to select specific trains and coaches dynamically based on user input, ensuring fast and reliable automation.
@@ -59,13 +58,13 @@ const passengerDetails = [
         name: 'John Doe',
         age: 30,
         gender: 'Male',
-        seatPreference: 'Lower'
+        berthPreference: 'NA'
     },
     {
         name: 'Jane Doe',
         age: 28,
         gender: 'Female',
-        seatPreference: 'Upper'
+        berthPreference: 'UB'
     }
 ];
 ```
@@ -79,6 +78,27 @@ const passengerDetails = [
 | **Quota**     | `general`, `tatkal`                   |
 | **Gender**    | `Male`, `Female`, `Transgender`        |
 | **Coach Type**| `2S`, `SL`, `3A`, `2A`, `1A`           |
+
+---
+
+## 🛏️ **Berth Code Mapping**
+During seat preference selection, berth types are internally mapped to short codes used by IRCTC. The following mapping is used:
+
+```javascript
+{
+  'NA': 'Any Berth',
+  'LB': 'Lower Berth',
+  'UB': 'Upper Berth',
+  'MB': 'Middle Berth',
+  'SLB': 'Side Lower',
+  'SUB': 'Side Upper',
+  'CB': 'Cabin',
+  'CP': 'Coupe'
+}
+```
+
+This mapping helps in dynamically converting user-friendly berth names into values recognized by the system.
+For not giving any berth preference, enter "NA" in the field of berthPreference in .json file
 
 ---
 
