@@ -118,9 +118,9 @@ npm run script
 ### 3. **⏰ Set Test Timing**
 - Set the booking time to 10:00:05 for AC Tatkal tickets and 11:00:05 for Sleeper Tatkal tickets by configuring the `testStartTime` variable in `tests/script.spec.js`
 ```bash
-const testStartTime = "10:00:05" --> for AC tatkal
+const testStartTime = "10:00:05"    # for AC tatkal
 OR
-const testStartTime = "11:00:05" --> for SL tatkal
+const testStartTime = "11:00:05"    # for SL tatkal
 ```
 
 ---
