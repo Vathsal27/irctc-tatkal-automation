@@ -1,6 +1,6 @@
 import { BotBooking } from "../class/ticketClass.js";
 import { readFile } from "fs/promises";
-import { waitForExpectedResponse } from "../helpers.js";
+import { waitForExpectedResponse, berthMapping } from "../helpers.js";
 const data = JSON.parse(await readFile(new URL("../data.json", import.meta.url)));
 
 export async function bookTatkalTicket(page) {
@@ -16,8 +16,9 @@ export async function bookTatkalTicket(page) {
 
     for (const passenger of data.passengerDetails) {
         await bot.addPassengerDetails(passenger);
+        await bot.selectBerthChoice(berthMapping, passenger);
     }
-
+    
     await bot.continueButton.click();
 
     await bot.proceedTowardsPayment(data);

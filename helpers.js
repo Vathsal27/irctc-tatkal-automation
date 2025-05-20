@@ -1,3 +1,14 @@
+export const berthMapping = {
+    'NA': 'Any Berth',
+    'LB': 'Lower Berth',
+    'UB': 'Upper Berth',
+    'MB': 'Middle Berth',
+    'SLB': 'Side Lower',
+    'SUB': 'Side Upper',
+    'CB': 'Cabin',
+    'CP': 'Coupe'
+};
+
 export async function waitUntilTargetTime(targetTime) {
     while (true) {
         const now = new Date();
