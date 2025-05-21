@@ -1,5 +1,4 @@
 export const berthMapping = {
-    'NA': 'Any Berth',
     'LB': 'Lower Berth',
     'UB': 'Upper Berth',
     'MB': 'Middle Berth',

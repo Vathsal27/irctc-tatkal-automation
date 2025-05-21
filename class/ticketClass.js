@@ -121,8 +121,10 @@ export class BotBooking {
     }
 
     async selectBerthChoice(berthMapping, data) {
-        await this.berthChoiceLocator(data).first().click();
-        await this.page.getByText(berthMapping[data.berthPreference]).click();
+        if (data.berthPreference !== 'NA') {
+            await this.berthChoiceLocator(data).first().click();
+            await this.page.getByText(berthMapping[data.berthPreference]).click();
+        }
     }
 
     async proceedTowardsPayment(data) {
