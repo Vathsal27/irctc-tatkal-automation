@@ -11,22 +11,6 @@ This project automates the process of booking General/Tatkal tickets on the IRCT
 
 ---
 
-## 🏗️ **Project Structure**
-```
-├── class
-│   └── ticketClass.js   # Core automation logic
-├── tests
-│   └── script.spec.js         # Test cases for booking
-├── utils
-│   └── bookTicket.js        # Helper functions for automation
-├── .gitignore
-├── package.json
-├── README.md
-└── playwright.config.js       # Playwright configuration
-```
-
----
-
 ## 📚 **Setup Instructions**
 1. **Clone the Repository**  
 ```bash
@@ -55,13 +39,13 @@ You can add passenger details by modifying the `data.json` file.
 ```javascript
 const passengerDetails = [
     {
-        name: 'John Doe',
-        age: 30,
+        name: 'Roronoa Zoro',
+        age: 24,
         gender: 'Male',
         berthPreference: 'NA'
     },
     {
-        name: 'Jane Doe',
+        name: 'Nico Robin',
         age: 28,
         gender: 'Female',
         berthPreference: 'UB'
@@ -97,7 +81,7 @@ During seat preference selection, berth types are internally mapped to short cod
 ```
 
 This mapping helps in dynamically converting user-friendly berth names into values recognized by the system.
-For not giving any berth preference, enter "NA" in the field of berthPreference in .json file
+For not giving any berth preference, enter `NA` in the field of berthPreference in .json file
 
 ---
 
@@ -109,18 +93,19 @@ For not giving any berth preference, enter "NA" in the field of berthPreference 
 - Provide the **date, month, and year** of the journey accurately.  
 - Enter the desired **train number** and **coach type** correctly.
 
-### 2. **Run the Automation**
-```bash
-npm run script
-```
-
-### 3. **⏰ Set Test Timing**
+### 2. **⏰ Set Test Timing**
 - Set the booking time to 10:00:05 for AC Tatkal tickets and 11:00:05 for Sleeper Tatkal tickets by configuring the `testStartTime` variable in `tests/script.spec.js`
 ```bash
 const testStartTime = "10:00:05"    # for AC tatkal
 OR
 const testStartTime = "11:00:05"    # for SL tatkal
 ```
+
+### 3. **Run the Automation**
+```bash
+npm run script
+```
+
 
 ---
 
