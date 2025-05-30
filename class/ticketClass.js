@@ -59,7 +59,7 @@ export class BotBooking {
         this.agreeToPolicy = this.page.getByRole('button', { name: 'Yes, I understand' });
     }
 
-    async fillStationDetails(data) {
+    async fillStationDetails(monthMap, data) {
         await this.page.goto(data.url);
 
         await this.sourceStation.click();
@@ -71,7 +71,7 @@ export class BotBooking {
         await this.selectStation.click();
 
         await this.journeyDate.click();
-        await this.selectDate(data.date, data.month, data.year).click();
+        await this.selectDate(data.date, monthMap[data.month], data.year).click();
 
         await this.quota.click();
         await this.selectQuota(data.quota).click();

@@ -1,12 +1,12 @@
 import { BotBooking } from "../class/ticketClass.js";
 import { readFile } from "fs/promises";
-import { waitForExpectedResponse, berthMapping } from "../helpers.js";
+import { waitForExpectedResponse, berthMapping, monthMap } from "../helpers.js";
 const data = JSON.parse(await readFile(new URL("../data.json", import.meta.url)));
 
 export async function bookTatkalTicket(page) {
     const bot = new BotBooking(page);
 
-    await bot.fillStationDetails(data);
+    await bot.fillStationDetails(monthMap, data);
 
     await waitForExpectedResponse(page, 'bot/editTrains', 200);
 

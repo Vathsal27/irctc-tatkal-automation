@@ -5,22 +5,22 @@
     "srcStationCode": "in-uppercase-ex-PUNE",
     "destStationCode": "in-uppercase-ex-PUNE",
     "quota": "tatkal", 
-    "date": "enter-date",
-    "month": "enter-month",
+    "date": "enter-date-1-to-31",
+    "month": "enter-month-01-to-12",
     "year": "enter-year",
     "trainNum": "train-number",
     "coachType": "coach-type",
     "mobileNumber": "mobile-num",
     "passengerDetails": [
         {
-            "name": "Rorona Zoro",
-            "age": "22",
+            "name": "Monkey D. Luffy",
+            "age": "19",
             "gender": "Male",
             "berthPreference": "NA"
         },
         {
-            "name": "Nico Robin",
-            "age": "25",
+            "name": "Boa Hancock",
+            "age": "31",
             "gender": "Female",
             "berthPreference": "SUB"
         }
