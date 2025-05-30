@@ -39,16 +39,16 @@ You can add passenger details by modifying the `data.json` file.
 ```javascript
 const passengerDetails = [
     {
-        name: 'Roronoa Zoro',
-        age: 24,
-        gender: 'Male',
-        berthPreference: 'NA'
+        "name": "Monkey D. Luffy",
+        "age": "19",
+        "gender": "Male",
+        "berthPreference": "NA"
     },
     {
-        name: 'Nico Robin',
-        age: 28,
-        gender: 'Female',
-        berthPreference: 'UB'
+        "name": "Boa Hancock",
+        "age": "31",
+        "gender": "Female",
+        "berthPreference": "SUB"
     }
 ];
 ```
