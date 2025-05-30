@@ -1,4 +1,5 @@
 export const berthMapping = {
+    'WS': 'Window Side',
     'LB': 'Lower Berth',
     'UB': 'Upper Berth',
     'MB': 'Middle Berth',
