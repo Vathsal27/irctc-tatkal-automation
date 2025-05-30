@@ -49,7 +49,7 @@ const passengerDetails = [
         "age": "31",
         "gender": "Female",
         "berthPreference": "SUB"
-    }
+    },
 ];
 ```
 > You can add up to **4 passenger objects** in the array.
