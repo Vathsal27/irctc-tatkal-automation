@@ -1,4 +1,3 @@
-
 # IRCTC Tatkal Ticket Booking Automation using Playwright
 
 This project automates the process of booking General/Tatkal tickets on the IRCTC website using **Playwright** in **JavaScript**. It includes the capability to select specific trains and coaches dynamically based on user input, ensuring fast and reliable automation.
@@ -9,22 +8,6 @@ This project automates the process of booking General/Tatkal tickets on the IRCT
 - Automates the process of booking General/Tatkal tickets on IRCTC.
 - Uses **Playwright** for end-to-end browser automation.
 - Handles dynamic selectors to select the correct train and coach.
-
----
-
-## 🏗️ **Project Structure**
-```
-├── class
-│   └── ticketClass.js   # Core automation logic
-├── tests
-│   └── script.spec.js         # Test cases for booking
-├── utils
-│   └── bookTicket.js        # Helper functions for automation
-├── .gitignore
-├── package.json
-├── README.md
-└── playwright.config.js       # Playwright configuration
-```
 
 ---
 
@@ -56,15 +39,17 @@ You can add passenger details by modifying the `data.json` file.
 ```javascript
 const passengerDetails = [
     {
-        name: 'John Doe',
-        age: 30,
-        gender: 'Male'
+        "name": "Monkey D. Luffy",
+        "age": "19",
+        "gender": "Male",
+        "berthPreference": "NA"
     },
     {
-        name: 'Jane Doe',
-        age: 28,
-        gender: 'Female'
-    }
+        "name": "Boa Hancock",
+        "age": "31",
+        "gender": "Female",
+        "berthPreference": "SUB"
+    },
 ];
 ```
 > You can add up to **4 passenger objects** in the array.
@@ -80,6 +65,26 @@ const passengerDetails = [
 
 ---
 
+## 🛏️ **Berth Code Mapping**
+During seat preference selection, berth types are internally mapped to short codes used by IRCTC. The following mapping is used:
+
+```javascript
+{
+  'LB': 'Lower Berth',
+  'UB': 'Upper Berth',
+  'MB': 'Middle Berth',
+  'SLB': 'Side Lower',
+  'SUB': 'Side Upper',
+  'CB': 'Cabin',
+  'CP': 'Coupe'
+}
+```
+
+This mapping helps in dynamically converting user-friendly berth names into values recognized by the system.
+For not giving any berth preference, enter `NA` in the field of berthPreference in .json file
+
+---
+
 ## 🚦 **Usage**
 ### 1. **Set Up Data**
 - Add your IRCTC login details in the `data.json` file.
@@ -88,10 +93,19 @@ const passengerDetails = [
 - Provide the **date, month, and year** of the journey accurately.  
 - Enter the desired **train number** and **coach type** correctly.
 
-### 2. **Run the Automation**
+### 2. **⏰ Set Test Timing**
+- Set the booking time to 10:00:05 for AC Tatkal tickets and 11:00:05 for Sleeper Tatkal tickets by configuring the `testStartTime` variable in `tests/script.spec.js`
+```bash
+const testStartTime = "10:00:05"    # for AC tatkal
+OR
+const testStartTime = "11:00:05"    # for SL tatkal
+```
+
+### 3. **Run the Automation**
 ```bash
 npm run script
 ```
+
 
 ---
 
