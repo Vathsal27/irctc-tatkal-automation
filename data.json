@@ -5,7 +5,7 @@
     "srcStationCode": "in-uppercase-ex-PUNE",
     "destStationCode": "in-uppercase-ex-PUNE",
     "quota": "tatkal", 
-    "date": "enter-date-1-to-31",
+    "date": "enter-date-01-to-31",
     "month": "enter-month-01-to-12",
     "year": "enter-year",
     "trainNum": "train-number",
