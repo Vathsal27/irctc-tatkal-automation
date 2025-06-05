@@ -11,7 +11,7 @@ export class BotBooking {
         this.selectStation = this.page.locator('//div[@class="stations"]/div[1]');
 
         this.journeyDate = this.page.getByLabel('Select Your Journey Date');
-        this.selectDate = (date, month, year) => this.page.locator(`#${month}-${year}`).getByText(`${date}`);  // Update dynamically if needed
+        this.selectDate = (date, month, year) => this.page.locator(`#${month}-${year}`).getByText(`${parseInt(date, 10)}`, { exact: true });  // Update dynamically if needed
 
         this.quota = this.page.getByLabel('Select Your Quota');
         this.selectQuota = (quota) => this.page.locator(`#${quota}`);
@@ -37,16 +37,20 @@ export class BotBooking {
         this.verifyAndProceedButton = this.page.getByRole('button', { name: 'Verify and Proceed' });
         this.addNewPassengerButton = this.page.getByRole('button', { name: 'Add New Passenger' });
 
+        // Passenger details
         this.passengerNameInput = this.page.getByRole('textbox', { name: 'Enter Full Name' });
         this.passengerAgeInput = this.page.getByPlaceholder('Enter Age');
         this.passengerGenderOption = (gender) => this.page.locator('#disha-drawer-1').getByText(gender, { exact: true });
         this.savePassengerButton = this.page.getByRole('button', { name: 'Save Passenger' });
         this.continueButton = this.page.getByRole('button', { name: 'Continue' });
 
+        // Berth choice locators
+        this.passengerBlock = (data) => this.page.getByText(`${data.name}Adult|${data.gender}|${data.age} yearsBerth Choice: Any Berth`);
+        this.berthChoiceLocator = (data) => this.passengerBlock(data).locator('div', { hasText: /^Any Berth$/ });
+
         // Dynamic pricing window
         this.dynamicPricingLocator = this.page.getByText('Dynamic Pricing is applicable');
         this.confirmButtonLocator = this.page.getByRole('button', { name: 'Confirm' });
-
 
         // Final confirmation
         this.autoUpgradationCheckbox = this.page.getByText('Consider for Auto Upgrade');
@@ -55,7 +59,7 @@ export class BotBooking {
         this.agreeToPolicy = this.page.getByRole('button', { name: 'Yes, I understand' });
     }
 
-    async fillStationDetails(data) {
+    async fillStationDetails(monthMap, data) {
         await this.page.goto(data.url);
 
         await this.sourceStation.click();
@@ -67,7 +71,7 @@ export class BotBooking {
         await this.selectStation.click();
 
         await this.journeyDate.click();
-        await this.selectDate(data.date, data.month, data.year).click();
+        await this.selectDate(data.date, monthMap[data.month], data.year).click();
 
         await this.quota.click();
         await this.selectQuota(data.quota).click();
@@ -114,6 +118,13 @@ export class BotBooking {
         await this.passengerAgeInput.fill(data.age);
         await this.passengerGenderOption(data.gender).click();
         await this.savePassengerButton.click();
+    }
+
+    async selectBerthChoice(berthMapping, data) {
+        if (data.berthPreference !== 'NA') {
+            await this.berthChoiceLocator(data).first().click();
+            await this.page.getByText(berthMapping[data.berthPreference]).click();
+        }
     }
 
     async proceedTowardsPayment(data) {
