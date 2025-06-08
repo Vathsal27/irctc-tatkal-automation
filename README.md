@@ -70,6 +70,7 @@ During seat preference selection, berth types are internally mapped to short cod
 
 ```javascript
 {
+  'WS': 'Window Side',  
   'LB': 'Lower Berth',
   'UB': 'Upper Berth',
   'MB': 'Middle Berth',
