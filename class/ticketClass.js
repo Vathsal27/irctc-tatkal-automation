@@ -36,7 +36,7 @@ export class BotBooking {
         };
 
         // Login and Passenger details locators
-        this.bookTicketButtonOnBot = this.page.getByRole('button', { name: 'BOOK TICKET' });
+        this.bookTicketButton = this.page.getByRole('button', { name: 'BOOK TICKET' });
         this.addNewPassengerButton = this.page.getByRole('button', { name: 'Add Passenger' });
 
         // Passenger details

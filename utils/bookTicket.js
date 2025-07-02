@@ -14,7 +14,7 @@ export async function bookTatkalTicket(page) {
 
     await bot.selectTrainAndCoach(data.trainNum, data.coachType);
 
-    await bot.bookTicketButtonOnBot.click();
+    await bot.bookTicketButton.click();
 
     for (const [index, passenger] of data.passengerDetails.entries()) {
         if (index > 0) {
