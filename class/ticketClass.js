@@ -131,9 +131,9 @@ export class BotBooking {
     }
 
     async additionalDetails(data) {
-        await bot.choosePreferenceButton.click();
-        await bot.autoUpgrade.click();
-        await bot.fillEmailID.fill(data.emailID);
+        await this.choosePreferenceButton.click();
+        await this.autoUpgrade.click();
+        await this.fillEmailID.fill(data.emailID);
     }
 
     async reviewAndPay() {
