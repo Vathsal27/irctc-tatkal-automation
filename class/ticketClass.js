@@ -1,11 +1,17 @@
+import { berthMapping } from "../helpers";
+
 export class BotBooking {
     constructor(page) {
         this.page = page;
 
-        this.sourceStation = this.page.getByText('Select Your Source Station');
+        this.mobileNumberInputPreSignIn = this.page.getByRole('textbox', { name: 'Enter mobile number' });
+        this.getOtpButtonPreSignIn = this.page.getByRole('button', { name: 'Get OTP' });
+        this.otpInputPreSignIn = this.page.getByRole('textbox', { name: 'Enter your OTP' });
+
+        this.sourceStation = this.page.getByLabel('From');
         this.sourceSearchBox = this.page.getByRole('textbox', { name: 'Search your Station or City' });
 
-        this.destinationStation = this.page.getByText('ToSelect Your Destination');
+        this.destinationStation = this.page.getByLabel('To', { exact: true });
         this.destinationSearchBox = this.page.getByRole('textbox', { name: 'Search your Station or City' });
 
         this.selectStation = this.page.locator('//div[@class="stations"]/div[1]');
@@ -16,7 +22,7 @@ export class BotBooking {
         this.quota = this.page.getByLabel('Select Your Quota');
         this.selectQuota = (quota) => this.page.locator(`#${quota}`);
 
-        this.bookTicketButton = this.page.getByRole('button', { name: 'Book Ticket' });
+        this.searchTrain = this.page.getByRole('button', { name: 'Search Trains' });
 
         // Select coach for the required train
         this.trainSelector = (trainNum) => {
@@ -31,37 +37,42 @@ export class BotBooking {
 
         // Login and Passenger details locators
         this.bookTicketButtonOnBot = this.page.getByRole('button', { name: 'BOOK TICKET' });
-        this.mobileNumberInput = this.page.getByPlaceholder('Enter mobile number');
-        this.getOtpButton = this.page.getByRole('button', { name: 'Get OTP' });
-        this.irctcUserIdInput = this.page.getByRole('textbox', { name: 'Enter IRCTC User ID Here...' });
-        this.verifyAndProceedButton = this.page.getByRole('button', { name: 'Verify and Proceed' });
-        this.addNewPassengerButton = this.page.getByRole('button', { name: 'Add New Passenger' });
+        this.addNewPassengerButton = this.page.getByRole('button', { name: 'Add Passenger' });
 
         // Passenger details
         this.passengerNameInput = this.page.getByRole('textbox', { name: 'Enter Full Name' });
         this.passengerAgeInput = this.page.getByPlaceholder('Enter Age');
-        this.passengerGenderOption = (gender) => this.page.locator('#disha-drawer-1').getByText(gender, { exact: true });
-        this.savePassengerButton = this.page.getByRole('button', { name: 'Save Passenger' });
+        this.passengerGenderOption = (gender) => this.page.getByText(gender, { exact: true });
         this.continueButton = this.page.getByRole('button', { name: 'Continue' });
 
         // Berth choice locators
         this.passengerBlock = (data) => this.page.getByText(`${data.name}Adult|${data.gender}|${data.age} yearsBerth Choice: Any Berth`);
         this.berthChoiceLocator = (data) => this.passengerBlock(data).locator('div', { hasText: /^Any Berth$/ });
 
-        // Dynamic pricing window
-        this.dynamicPricingLocator = this.page.getByText('Dynamic Pricing is applicable');
-        this.confirmButtonLocator = this.page.getByRole('button', { name: 'Confirm' });
+        this.berthPreferenceButton = this.page.locator('div').filter({ hasText: /^Berth Preference$/ }).nth(2);
+        this.berthOption = (berth) => this.page.locator('div').filter({ hasText: new RegExp(`^${berth}$`) })
 
         // Final confirmation
-        this.autoUpgradationCheckbox = this.page.getByText('Consider for Auto Upgrade');
-        this.fillEmailID = (emailID) => this.page.getByRole('textbox', { name: 'Enter your Email ID' }).fill(emailID);
-        this.continueButtonV2 = this.page.locator('#drawer-footer').getByRole('button', { name: 'Continue' });
-        this.agreeToPolicy = this.page.getByRole('button', { name: 'Yes, I understand' });
+        this.fillEmailID = this.page.getByRole('textbox', { name: 'Enter your Email ID' });
+
+        // Additional Locators for updated version of UI
+        this.choosePreferenceButton = this.page.getByText('Choose Preference (optional)');
+        this.autoUpgrade = this.page.getByRole('img', { name: 'dot' }).nth(2);
+        this.addPassenger = this.page.getByRole('button', { name: 'Add Passenger' });
+
+        this.reviewJourneyButton = this.page.getByRole('button', { name: 'Review Journey' });
+        this.getOtpButtonPayment = this.page.getByRole('button', { name: 'Get OTP' });
+        this.upiPaymentOption = this.page.locator('div').filter({ hasText: /^UPI$/ }).first();
+    }
+
+    async preSignIn(data) {
+        await this.page.goto(data.url);
+        await this.mobileNumberInputPreSignIn.fill(data.mobileNumber);
+        await this.getOtpButtonPreSignIn.click();
+        await this.otpInputPreSignIn.click();
     }
 
     async fillStationDetails(monthMap, data) {
-        await this.page.goto(data.url);
-
         await this.sourceStation.click();
         await this.sourceSearchBox.fill(data.srcStationCode);
         await this.selectStation.click();
@@ -76,18 +87,7 @@ export class BotBooking {
         await this.quota.click();
         await this.selectQuota(data.quota).click();
 
-        await this.bookTicketButton.click();
-    }
-
-    async loginViaOTP(data) {
-        await this.bookTicketButtonOnBot.click();
-        if (await this.dynamicPricingLocator.isVisible()) {
-            await this.confirmButtonLocator.click();
-        }
-        await this.mobileNumberInput.fill(data.mobileNumber);
-        await this.getOtpButton.click();
-        await this.irctcUserIdInput.fill(data.irctcUserId);
-        await this.verifyAndProceedButton.click();
+        await this.searchTrain.click();
     }
 
     async selectTrainAndCoach(trainNum, coachType) {
@@ -113,11 +113,14 @@ export class BotBooking {
     }
 
     async addPassengerDetails(data) {
-        await this.addNewPassengerButton.click();
+        await this.passengerGenderOption(data.gender).click();
         await this.passengerNameInput.fill(data.name);
         await this.passengerAgeInput.fill(data.age);
-        await this.passengerGenderOption(data.gender).click();
-        await this.savePassengerButton.click();
+
+        if (data.berthPreference !== 'NA') {
+            await this.berthPreferenceButton.click();
+            await this.berthOption(berthMapping[data.berthPreference]).click();
+        }
     }
 
     async selectBerthChoice(berthMapping, data) {
@@ -127,11 +130,15 @@ export class BotBooking {
         }
     }
 
-    async proceedTowardsPayment(data) {
-        await this.autoUpgradationCheckbox.click();
-        await this.fillEmailID(data.emailID);
-        await this.continueButton.click();
-        await this.continueButtonV2.click();
-        await this.agreeToPolicy.click();
+    async additionalDetails(data) {
+        await bot.choosePreferenceButton.click();
+        await bot.autoUpgrade.click();
+        await bot.fillEmailID.fill(data.emailID);
+    }
+
+    async reviewAndPay() {
+        await this.reviewJourneyButton.click();
+        await this.getOtpButtonPayment.click();
+        await this.upiPaymentOption.click();
     }
 }

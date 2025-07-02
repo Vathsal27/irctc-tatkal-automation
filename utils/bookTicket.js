@@ -1,10 +1,12 @@
 import { BotBooking } from "../class/ticketClass.js";
 import { readFile } from "fs/promises";
-import { waitForExpectedResponse, berthMapping, monthMap } from "../helpers.js";
+import { waitForExpectedResponse, monthMap } from "../helpers.js";
 const data = JSON.parse(await readFile(new URL("../data.json", import.meta.url)));
 
 export async function bookTatkalTicket(page) {
     const bot = new BotBooking(page);
+
+    await bot.preSignIn(data);
 
     await bot.fillStationDetails(monthMap, data);
 
@@ -12,14 +14,17 @@ export async function bookTatkalTicket(page) {
 
     await bot.selectTrainAndCoach(data.trainNum, data.coachType);
 
-    await bot.loginViaOTP(data);
+    await bot.bookTicketButtonOnBot.click();
 
-    for (const passenger of data.passengerDetails) {
+    for (const [index, passenger] of data.passengerDetails.entries()) {
+        if (index > 0) {
+            await bot.addPassenger.click();
+        }
         await bot.addPassengerDetails(passenger);
-        await bot.selectBerthChoice(berthMapping, passenger);
+        await bot.addPassenger.click();
     }
-    
-    await bot.continueButton.click();
 
-    await bot.proceedTowardsPayment(data);
+    await bot.additionalDetails(data);
+
+    await bot.reviewAndPay();
 }
