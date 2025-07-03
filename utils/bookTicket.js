@@ -22,6 +22,7 @@ export async function bookTatkalTicket(page) {
         }
         await bot.addPassengerDetails(passenger);
         await bot.addPassenger.click();
+        await bot.page.waitForTimeout(1500);
     }
 
     await bot.additionalDetails(data);
