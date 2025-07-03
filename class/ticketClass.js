@@ -57,7 +57,7 @@ export class BotBooking {
 
         // Additional Locators for updated version of UI
         this.choosePreferenceButton = this.page.getByText('Choose Preference (optional)');
-        this.autoUpgrade = this.page.getByRole('img', { name: 'dot' }).nth(2);
+        this.autoUpgrade = this.page.locator('//*[@id="corover-messages-box"]/div[3]/div[4]/div[2]/div[4]/div/img');
         this.addPassenger = this.page.getByRole('button', { name: 'Add Passenger' });
 
         this.reviewJourneyButton = this.page.getByRole('button', { name: 'Review Journey' });
