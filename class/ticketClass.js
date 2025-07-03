@@ -57,7 +57,6 @@ export class BotBooking {
 
         // Additional Locators for updated version of UI
         this.choosePreferenceButton = this.page.getByText('Choose Preference (optional)');
-        this.autoUpgrade = this.page.locator('//*[@id="corover-messages-box"]/div[3]/div[4]/div[2]/div[4]/div/img');
         this.addPassenger = this.page.getByRole('button', { name: 'Add Passenger' });
 
         this.reviewJourneyButton = this.page.getByRole('button', { name: 'Review Journey' });
@@ -160,7 +159,11 @@ export class BotBooking {
 
     async additionalDetails(data) {
         await this.choosePreferenceButton.click();
-        await this.autoUpgrade.click();
+        if (data.quota === "tatkal") {
+            await this.page.locator('//*[@id="corover-messages-box"]/div[3]/div[4]/div[2]/div[4]/div/img').click();
+        } else {
+            await this.page.locator('//*[@id="corover-messages-box"]/div[3]/div[4]/div[2]/div[3]/div/img').click();
+        }
         await this.fillEmailID.fill(data.emailID);
     }
 
