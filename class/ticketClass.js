@@ -63,6 +63,13 @@ export class BotBooking {
         this.reviewJourneyButton = this.page.getByRole('button', { name: 'Review Journey' });
         this.getOtpButtonPayment = this.page.getByRole('button', { name: 'Get OTP' });
         this.upiPaymentOption = this.page.locator('div').filter({ hasText: /^UPI$/ }).first();
+
+        // Clearance of passenger list
+        this.passengerList = this.page.getByLabel('My Passengers');
+        this.passengerListDiv = this.page.locator('xpath=//*[@id="corover-body"]/div[1]/div[2]/div[2]/div[2]/div/div/div[1]/div');
+        this.deleteBtn = this.page.getByRole('img', { name: 'Delete' });
+
+        this.navigateBackButton = this.page.getByRole('img', { name: 'Back' });
     }
 
     async preSignIn(data) {
@@ -70,6 +77,27 @@ export class BotBooking {
         await this.mobileNumberInputPreSignIn.fill(data.mobileNumber);
         await this.getOtpButtonPreSignIn.click();
         await this.otpInputPreSignIn.click();
+    }
+
+    async clearPassengerList() {
+        await this.passengerList.click();
+
+        await this.passengerListDiv.waitFor({ state: 'visible', timeout: 1000 }).catch(() => {});
+
+        let divCount = await this.passengerListDiv.count();
+
+        if (divCount === 0) {
+            console.log("No passengers to delete.");
+        } else {
+            while ((divCount = await this.passengerListDiv.count()) > 0) {
+                const deleteBtn = this.deleteBtn.first();
+                await deleteBtn.click();
+                await this.page.waitForTimeout(500);
+            }
+        }
+
+        await this.navigateBackButton.waitFor({ state: 'visible', timeout: 1000 }).catch(() => {});
+        await this.navigateBackButton.click();
     }
 
     async fillStationDetails(monthMap, data) {

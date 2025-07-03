@@ -8,6 +8,8 @@ export async function bookTatkalTicket(page) {
 
     await bot.preSignIn(data);
 
+    await bot.clearPassengerList();
+
     await bot.fillStationDetails(monthMap, data);
 
     await waitForExpectedResponse(page, 'bot/editTrains', 200);
