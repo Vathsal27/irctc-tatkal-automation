@@ -37,6 +37,7 @@ export class BotBooking {
 
         // Login and Passenger details locators
         this.bookTicketButton = this.page.getByRole('button', { name: 'BOOK TICKET' });
+        this.irctcUserID = this.page.getByRole('textbox', { name: 'Enter your IRCTC user ID' });
         this.addNewPassengerButton = this.page.getByRole('button', { name: 'Add Passenger' });
 
         // Passenger details
@@ -137,6 +138,13 @@ export class BotBooking {
         }
 
         await coachContainer.click();
+    }
+
+    async bookTicket(userID) {
+        await this.bookTicketButton.click();
+        if (await this.irctcUserID.isVisible()) {
+            await this.irctcUserID.fill(userID);
+        }
     }
 
     async addPassengerDetails(data) {
