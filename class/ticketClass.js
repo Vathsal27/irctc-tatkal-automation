@@ -60,6 +60,9 @@ export class BotBooking {
         this.choosePreferenceButton = this.page.getByText('Choose Preference (optional)');
         this.addPassenger = this.page.getByRole('button', { name: 'Add Passenger' });
 
+        this.autoUpgradeLocator1 = this.page.locator('//*[@id="corover-messages-box"]/div[3]/div[4]/div[2]/div[4]/div/img');
+        this.autoUpgradeLocator2 = this.page.locator('//*[@id="corover-messages-box"]/div[3]/div[4]/div[2]/div[3]/div/img');
+
         this.reviewJourneyButton = this.page.getByRole('button', { name: 'Review Journey' });
         this.getOtpButtonPayment = this.page.getByRole('button', { name: 'Get OTP' });
         this.upiPaymentOption = this.page.locator('div').filter({ hasText: /^UPI$/ }).first();
@@ -82,7 +85,7 @@ export class BotBooking {
     async clearPassengerList() {
         await this.passengerList.click();
 
-        await this.passengerListDiv.waitFor({ state: 'visible', timeout: 1000 }).catch(() => {});
+        await this.passengerListDiv.waitFor({ state: 'visible', timeout: 1000 }).catch(() => { });
 
         let divCount = await this.passengerListDiv.count();
 
@@ -96,7 +99,6 @@ export class BotBooking {
             }
         }
 
-        await this.navigateBackButton.waitFor({ state: 'visible', timeout: 1000 }).catch(() => {});
         await this.navigateBackButton.click();
     }
 
@@ -167,12 +169,14 @@ export class BotBooking {
 
     async additionalDetails(data) {
         await this.choosePreferenceButton.click();
-        if (data.quota === "tatkal") {
-            await this.page.locator('//*[@id="corover-messages-box"]/div[3]/div[4]/div[2]/div[4]/div/img').click();
-        } else {
-            await this.page.locator('//*[@id="corover-messages-box"]/div[3]/div[4]/div[2]/div[3]/div/img').click();
-        }
+        
         await this.fillEmailID.fill(data.emailID);
+
+        if (await this.autoUpgradeLocator1.count() > 0 && await this.autoUpgradeLocator1.isVisible()) {
+            await this.autoUpgradeLocator1.click();
+        } else if (await this.autoUpgradeLocator2.count() > 0 && await this.autoUpgradeLocator2.isVisible()) {
+            await this.autoUpgradeLocator2.click();
+        }
     }
 
     async reviewAndPay() {
