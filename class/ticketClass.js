@@ -38,7 +38,7 @@ export class BotBooking {
         // Login and Passenger details locators
         this.bookTicketButton = this.page.getByRole('button', { name: 'BOOK TICKET' });
         this.irctcUserID = this.page.getByRole('textbox', { name: 'Enter your IRCTC user ID' });
-        this.addNewPassengerButton = this.page.getByRole('button', { name: 'Add Passenger' });
+        this.verifyAndProceed = this.page.getByRole('button', { name: 'Verify and Proceed' });
 
         // Passenger details
         this.passengerNameInput = this.page.getByRole('textbox', { name: 'Enter Full Name' });
@@ -51,17 +51,18 @@ export class BotBooking {
         this.berthChoiceLocator = (data) => this.passengerBlock(data).locator('div', { hasText: /^Any Berth$/ });
 
         this.berthPreferenceButton = this.page.locator('div').filter({ hasText: /^Berth Preference$/ }).nth(2);
-        this.berthOption = (berth) => this.page.locator('div').filter({ hasText: new RegExp(`^${berth}$`) })
-
-        // Final confirmation
-        this.fillEmailID = this.page.getByRole('textbox', { name: 'Enter your Email ID' });
-
-        // Additional Locators for updated version of UI
-        this.choosePreferenceButton = this.page.getByText('Choose Preference (optional)');
+        this.berthOption = (berth) => this.page.locator('div').filter({ hasText: new RegExp(`^${berth}$`) });
+        
         this.addPassenger = this.page.getByRole('button', { name: 'Add Passenger' });
+        
+        this.choosePreferenceButton = this.page.getByText('Choose Preference (optional)');
+
+        this.fillEmailID = this.page.getByRole('textbox', { name: 'Enter your Email ID' });
 
         this.autoUpgradeLocator1 = this.page.locator('//*[@id="corover-messages-box"]/div[3]/div[4]/div[2]/div[4]/div/img');
         this.autoUpgradeLocator2 = this.page.locator('//*[@id="corover-messages-box"]/div[3]/div[4]/div[2]/div[3]/div/img');
+
+        this.bookOnlyIfConfirm = this.page.getByText('Book only if confirm', { exact: true });
 
         this.reviewJourneyButton = this.page.getByRole('button', { name: 'Review Journey' });
         this.getOtpButtonPayment = this.page.getByRole('button', { name: 'Get OTP' });
@@ -144,8 +145,10 @@ export class BotBooking {
 
     async bookTicket(userID) {
         await this.bookTicketButton.click();
+        await this.page.waitForTimeout(500);
         if (await this.irctcUserID.isVisible()) {
             await this.irctcUserID.fill(userID);
+            await this.verifyAndProceed.click();
         }
     }
 
@@ -177,6 +180,8 @@ export class BotBooking {
         } else if (await this.autoUpgradeLocator2.count() > 0 && await this.autoUpgradeLocator2.isVisible()) {
             await this.autoUpgradeLocator2.click();
         }
+
+        await this.bookOnlyIfConfirm.click();
     }
 
     async reviewAndPay() {
