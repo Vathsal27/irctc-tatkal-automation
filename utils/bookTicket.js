@@ -16,7 +16,7 @@ export async function bookTatkalTicket(page) {
 
     await bot.selectTrainAndCoach(data.trainNum, data.coachType);
 
-    await bot.bookTicketButton.click();
+    await bot.bookTicket(data.irctcUserId);
 
     for (const [index, passenger] of data.passengerDetails.entries()) {
         if (index > 0) {
@@ -24,7 +24,7 @@ export async function bookTatkalTicket(page) {
         }
         await bot.addPassengerDetails(passenger);
         await bot.addPassenger.click();
-        await bot.page.waitForTimeout(1500);
+        await bot.page.waitForTimeout(1000);
     }
 
     await bot.additionalDetails(data);
