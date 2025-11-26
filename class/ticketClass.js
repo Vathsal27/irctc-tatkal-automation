@@ -1,9 +1,10 @@
-import { berthMapping } from "../helpers";
+import { berthMapping, randomTimeout } from "../helpers";
 
 export class BotBooking {
     constructor(page) {
         this.page = page;
 
+        this.signIn = this.page.getByRole('button', { name: 'Sign in Logo Sign In' });
         this.mobileNumberInputPreSignIn = this.page.getByRole('textbox', { name: 'Enter mobile number' });
         this.getOtpButtonPreSignIn = this.page.getByRole('button', { name: 'Get OTP' });
         this.otpInputPreSignIn = this.page.getByRole('textbox', { name: 'Enter your OTP' });
@@ -52,9 +53,9 @@ export class BotBooking {
 
         this.berthPreferenceButton = this.page.locator('div').filter({ hasText: /^Berth Preference$/ }).nth(2);
         this.berthOption = (berth) => this.page.locator('div').filter({ hasText: new RegExp(`^${berth}$`) });
-        
+
         this.addPassenger = this.page.getByRole('button', { name: 'Add Passenger' });
-        
+
         this.choosePreferenceButton = this.page.getByText('Choose Preference (optional)');
 
         this.fillEmailID = this.page.getByRole('textbox', { name: 'Enter your Email ID' });
@@ -78,15 +79,25 @@ export class BotBooking {
 
     async preSignIn(data) {
         await this.page.goto(data.url);
+        await this.page.waitForTimeout(randomTimeout());
+        await this.signIn.click();
+        await this.page.waitForTimeout(randomTimeout());
         await this.mobileNumberInputPreSignIn.fill(data.mobileNumber);
+        await this.page.waitForTimeout(randomTimeout());
         await this.getOtpButtonPreSignIn.click();
+        await this.page.waitForTimeout(randomTimeout());
         await this.otpInputPreSignIn.click();
+        await this.page.waitForTimeout(randomTimeout());
     }
 
     async clearPassengerList() {
         await this.passengerList.click();
 
+        await this.page.waitForTimeout(randomTimeout());
+
         await this.passengerListDiv.waitFor({ state: 'visible', timeout: 1000 }).catch(() => { });
+
+        await this.page.waitForTimeout(randomTimeout());
 
         let divCount = await this.passengerListDiv.count();
 
@@ -96,29 +107,42 @@ export class BotBooking {
             while ((divCount = await this.passengerListDiv.count()) > 0) {
                 const deleteBtn = this.deleteBtn.first();
                 await deleteBtn.click();
-                await this.page.waitForTimeout(500);
+                await this.page.waitForTimeout(randomTimeout());
             }
         }
 
         await this.navigateBackButton.click();
+        await this.page.waitForTimeout(randomTimeout());
     }
 
     async fillStationDetails(monthMap, data) {
         await this.sourceStation.click();
+        await this.page.waitForTimeout(randomTimeout());
+        
         await this.sourceSearchBox.fill(data.srcStationCode);
+        await this.page.waitForTimeout(randomTimeout());
         await this.selectStation.click();
+        await this.page.waitForTimeout(randomTimeout());
 
         await this.destinationStation.click();
+        await this.page.waitForTimeout(randomTimeout());
         await this.destinationSearchBox.fill(data.destStationCode);
+        await this.page.waitForTimeout(randomTimeout());
         await this.selectStation.click();
-
+        await this.page.waitForTimeout(randomTimeout());
+        
         await this.journeyDate.click();
+        await this.page.waitForTimeout(randomTimeout());
         await this.selectDate(data.date, monthMap[data.month], data.year).click();
-
+        await this.page.waitForTimeout(randomTimeout());
+        
         await this.quota.click();
+        await this.page.waitForTimeout(randomTimeout());
         await this.selectQuota(data.quota).click();
+        await this.page.waitForTimeout(randomTimeout());
 
         await this.searchTrain.click();
+        await this.page.waitForTimeout(randomTimeout());
     }
 
     async selectTrainAndCoach(trainNum, coachType) {
@@ -141,52 +165,70 @@ export class BotBooking {
         }
 
         await coachContainer.click();
+        await this.page.waitForTimeout(randomTimeout());
     }
 
     async bookTicket(userID) {
         await this.bookTicketButton.click();
-        await this.page.waitForTimeout(500);
+        await this.page.waitForTimeout(randomTimeout());
         if (await this.irctcUserID.isVisible()) {
             await this.irctcUserID.fill(userID);
+            await this.page.waitForTimeout(randomTimeout());
             await this.verifyAndProceed.click();
+            await this.page.waitForTimeout(randomTimeout());
         }
     }
 
     async addPassengerDetails(data) {
         await this.passengerGenderOption(data.gender).click();
+        await this.page.waitForTimeout(randomTimeout());
         await this.passengerNameInput.fill(data.name);
+        await this.page.waitForTimeout(randomTimeout());
         await this.passengerAgeInput.fill(data.age);
+        await this.page.waitForTimeout(randomTimeout());
 
         if (data.berthPreference !== 'NA') {
             await this.berthPreferenceButton.click();
+            await this.page.waitForTimeout(randomTimeout());
             await this.berthOption(berthMapping[data.berthPreference]).click();
+            await this.page.waitForTimeout(randomTimeout());
         }
     }
 
     async selectBerthChoice(berthMapping, data) {
         if (data.berthPreference !== 'NA') {
             await this.berthChoiceLocator(data).first().click();
+            await this.page.waitForTimeout(randomTimeout());
             await this.page.getByText(berthMapping[data.berthPreference]).click();
+            await this.page.waitForTimeout(randomTimeout());
         }
     }
 
     async additionalDetails(data) {
         await this.choosePreferenceButton.click();
-        
+        await this.page.waitForTimeout(randomTimeout());
+
         await this.fillEmailID.fill(data.emailID);
+        await this.page.waitForTimeout(randomTimeout());
 
         if (await this.autoUpgradeLocator1.count() > 0 && await this.autoUpgradeLocator1.isVisible()) {
             await this.autoUpgradeLocator1.click();
+            await this.page.waitForTimeout(randomTimeout());
         } else if (await this.autoUpgradeLocator2.count() > 0 && await this.autoUpgradeLocator2.isVisible()) {
             await this.autoUpgradeLocator2.click();
+            await this.page.waitForTimeout(randomTimeout());
         }
 
         await this.bookOnlyIfConfirm.click();
+        await this.page.waitForTimeout(randomTimeout());
     }
 
     async reviewAndPay() {
         await this.reviewJourneyButton.click();
+        await this.page.waitForTimeout(randomTimeout());
         await this.getOtpButtonPayment.click();
+        await this.page.waitForTimeout(randomTimeout());
         await this.upiPaymentOption.click();
+        await this.page.waitForTimeout(randomTimeout());
     }
 }

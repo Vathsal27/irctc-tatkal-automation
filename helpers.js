@@ -69,3 +69,11 @@ export async function waitForExpectedResponse(page, urlPart, statusCode, timeout
         }, timeout);
     });
 }
+
+export function randomTimeout() {
+    const minSec = 1;
+    const maxSec = 2;
+    const seconds = Math.floor(Math.random() * (maxSec - minSec + 1)) + minSec;
+    const ms = seconds * 1000;
+    return ms;
+}
